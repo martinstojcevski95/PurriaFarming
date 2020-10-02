@@ -23,8 +23,9 @@ public class UIController : MonoBehaviour
     [SerializeField]
     Text LogText;
     [SerializeField]
-    Canvas LogPanel;
-
+    Canvas LogPanel,StaticLogPanel;
+    public Canvas DeleteContractDialogConfirmationPanel;
+    public Button DeleteDialogYesButton;
     private void Awake()
     {
         Instance = this;
@@ -65,7 +66,7 @@ public class UIController : MonoBehaviour
     {
         LogInAndRegisterScreen.enabled = false;
         // here the wait time needs to respond to the real wait time later when the data will be loaded from the db
-        DisplayLogText(2f, "Loading, please wait");
+        DisplayAutomaticLogText(2f, "Loading, please wait");
         StartCoroutine(OpenDashboardAfterLogIn(2f,FullDashboard,true));
     }
 
@@ -144,7 +145,7 @@ public class UIController : MonoBehaviour
     /// </summary>
     /// <param name="waitTime"></param>
     /// <param name="textDescription"></param>
-    public void DisplayLogText(float waitTime, string textDescription)
+    public void DisplayAutomaticLogText(float waitTime, string textDescription)
     {
         StartCoroutine(LogTextCoroutine(waitTime, textDescription));
     }
@@ -164,5 +165,21 @@ public class UIController : MonoBehaviour
 
     }
 
+    public void DisplayStaticLogText(string textDescription,bool isPanelActive)
+    {
+        StaticLogPanel.enabled = isPanelActive;
+        LogText.text = textDescription;
+    }
 
+    public void DeleteContractDialog(bool isPanelActive)
+    {
+        if(isPanelActive)
+        {
+            DeleteContractDialogConfirmationPanel.enabled = isPanelActive;
+        }
+        else
+        {
+            DeleteContractDialogConfirmationPanel.enabled= isPanelActive;
+        }
+    }
 }

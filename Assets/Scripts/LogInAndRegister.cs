@@ -14,10 +14,9 @@ public class LogInAndRegister : MonoBehaviour
     
     [Header("Login And Register")]
     public InputField RegistrationEmail, RegistrationPassword, LogInEmail, LogInPassword;
-    bool isDone;
     public string userID;
     public string UserName;
-
+    public User _User;
 
     public static LogInAndRegister Instance;
 
@@ -118,9 +117,10 @@ public class LogInAndRegister : MonoBehaviour
                   UserName = newUser.UserId;
 
 
-
+                  ContractController.Instance.GetDataForAllContracts();
 
               });
+
         SetLogInCreds();
         UIController.Instance.OpenFullDasobhard();
     }
@@ -130,10 +130,10 @@ public class LogInAndRegister : MonoBehaviour
     /// Set the user into the db
     /// </summary>
     /// <param name="userID"></param>
-    public void SetUserToDB(string userID)
+    public void SetUserToDB(string userName)
     {
         User user = new User();
-        user.UserName = RegistrationEmail.text;
+        user.UserName = userName;
         user.UserID = userID;
         string ToJson = JsonUtility.ToJson(user);
         reference.Child("USER").SetValueAsync(ToJson);
