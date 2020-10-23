@@ -6,14 +6,17 @@ using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class Contract : MonoBehaviour
 {
 
 
     public ContractStats contractStats;
 
-
     ContractPublicInfo contractPublicInfo;
+
+    public Plant contractPlant;
+
 
     private void Awake()
     {
@@ -32,7 +35,7 @@ public class Contract : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+       
     }
 
     // Update is called once per frame
@@ -48,20 +51,23 @@ public class Contract : MonoBehaviour
     public void CreateContract()
     {
 
-        Contract contract = new Contract();
-        contract.contractStats = new ContractStats();
-        if (contract.contractStats.isContractStarted == false)
+       contractStats = new ContractStats();
+        if (contractStats.isContractStarted == false)
         {
-            contract.contractStats.ContractDescription = "test";
-            contract.contractStats.ContractID = contractPublicInfo.StaticConttractID;
-            contract.contractStats.isContractStarted = true;
+           contractStats.ContractDescription = "test";
+           contractStats.ContractID = contractPublicInfo.StaticConttractID;
+            contractStats.isContractStarted = true;
             // set public info here
             //   gameObject.GetComponent<ContractPublicInfo>().SetPlayerPrefsContractID(contract.contractStats.ContractID, true);
-            string serializedJson = JsonUtility.ToJson(contract);
-            FirebaseReferenceManager.reference.Child("USERS").Child(LogInAndRegister.Instance.UserName).Child("FARMDATA").Child("CONTRACT" + contract.contractStats.ContractID).SetRawJsonValueAsync(serializedJson);
-            LoadContractDataA();
+            string serializedJson = JsonUtility.ToJson(contractStats);
+            FirebaseReferenceManager.reference.Child("USERS").Child(LogInAndRegister.Instance.UserName).Child("FARMDATA").Child("CONTRACT" + contractStats.ContractID).SetRawJsonValueAsync(serializedJson);
+            contractPlant.SetInitialDataForPlant(contractStats.ContractID);
         }
+
+        LoadContractDataA();
     }
+
+
 
 
 
@@ -70,14 +76,14 @@ public class Contract : MonoBehaviour
     /// </summary>
     public void DeleteContract()
     {
-        if(contractStats != null)
+        if (contractStats != null)
         {
             FirebaseReferenceManager.reference.Child("USERS").Child(LogInAndRegister.Instance.UserName).Child("FARMDATA").Child("CONTRACT" + contractStats.ContractID).RemoveValueAsync();
             UIController.Instance.DeleteContractDialog(false);
             contractStats = null;
             UIController.Instance.DeleteDialogYesButton.onClick.RemoveAllListeners();
         }
-
+        contractPlant.ClearPlantStats();
     }
 
     /// <summary>
@@ -90,6 +96,7 @@ public class Contract : MonoBehaviour
         UIController.Instance.DeleteContractDialog(true);
     }
 
+
     /// <summary>
     /// Loads data  from db for each contract after the log in 
     /// </summary>
@@ -97,7 +104,7 @@ public class Contract : MonoBehaviour
     {
 
         FirebaseDatabase.DefaultInstance
-           .GetReference("USERS").Child(LogInAndRegister.Instance.UserName).Child("FARMDATA").Child("CONTRACT" + contractPublicInfo.StaticConttractID).Child("contractStats")
+           .GetReference("USERS").Child(LogInAndRegister.Instance.UserName).Child("FARMDATA").Child("CONTRACT" + contractPublicInfo.StaticConttractID)
            .GetValueAsync().ContinueWith(task =>
       {
           if (task.IsFaulted)

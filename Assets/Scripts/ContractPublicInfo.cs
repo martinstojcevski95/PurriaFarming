@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ContractPublicInfo : MonoBehaviour
 {
     public Contract contract;
+
     private void Awake()
     {
 
@@ -42,6 +43,11 @@ public class ContractPublicInfo : MonoBehaviour
 
     }
 
+
+    public int GetStaticContractID()
+    {
+        return StaticConttractID;
+    }
 
     //PUBLIC VARIABLES
     public Button ContractUIButton;
