@@ -335,35 +335,6 @@ MonoBehaviour:
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &73194864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 73194861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bed606cd22788445a25ba7ea75e9bfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plantStats:
-    isDroneAssigned: 0
-    isPlantPlanted: 0
-    isPlantInContract: 0
-    PlantID: 0
-    FieldID: 
-    ContractID: 0
-    GrowthDays: 0
-    Tultip: 0
-    SoilMoisture: 0
-    SoilDensity: 0
-    SoilOrganicMaterial: 0
-    Fertilizer: 0
-    Weed: 0
-    Disease: 0
-    Toxicity: 0
-    Acidity: 0
 --- !u!114 &73194866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,7 +351,10 @@ MonoBehaviour:
     ContractID: 0
     isContractStarted: 0
     ContractDescription: 
-  contractPlant: {fileID: 73194864}
+  contractPlant: {fileID: 0}
+  plants: []
+  plantprefab: {fileID: 8602959280570261124, guid: 1bcd737742dfb3841809eaa791adfd2b,
+    type: 3}
 --- !u!114 &73194867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,35 +449,6 @@ MonoBehaviour:
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &142431076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 142431073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bed606cd22788445a25ba7ea75e9bfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plantStats:
-    isDroneAssigned: 0
-    isPlantPlanted: 0
-    isPlantInContract: 0
-    PlantID: 0
-    FieldID: 
-    ContractID: 0
-    GrowthDays: 0
-    Tultip: 0
-    SoilMoisture: 0
-    SoilDensity: 0
-    SoilOrganicMaterial: 0
-    Fertilizer: 0
-    Weed: 0
-    Disease: 0
-    Toxicity: 0
-    Acidity: 0
 --- !u!114 &142431078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,7 +465,10 @@ MonoBehaviour:
     ContractID: 0
     isContractStarted: 0
     ContractDescription: 
-  contractPlant: {fileID: 142431076}
+  contractPlant: {fileID: 0}
+  plants: []
+  plantprefab: {fileID: 8602959280570261124, guid: 1bcd737742dfb3841809eaa791adfd2b,
+    type: 3}
 --- !u!114 &142431079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1540,7 +1488,6 @@ GameObject:
   - component: {fileID: 559503716}
   - component: {fileID: 559503714}
   - component: {fileID: 559503715}
-  - component: {fileID: 559503719}
   m_Layer: 5
   m_Name: Contract (5)
   m_TagString: Untagged
@@ -1587,7 +1534,10 @@ MonoBehaviour:
     ContractID: 0
     isContractStarted: 0
     ContractDescription: 
-  contractPlant: {fileID: 559503719}
+  contractPlant: {fileID: 0}
+  plants: []
+  plantprefab: {fileID: 8602959280570261124, guid: 1bcd737742dfb3841809eaa791adfd2b,
+    type: 3}
 --- !u!114 &559503715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1690,35 +1640,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 559503712}
   m_CullTransparentMesh: 0
---- !u!114 &559503719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 559503712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bed606cd22788445a25ba7ea75e9bfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plantStats:
-    isDroneAssigned: 0
-    isPlantPlanted: 0
-    isPlantInContract: 0
-    PlantID: 0
-    FieldID: 
-    ContractID: 0
-    GrowthDays: 0
-    Tultip: 0
-    SoilMoisture: 0
-    SoilDensity: 0
-    SoilOrganicMaterial: 0
-    Fertilizer: 0
-    Weed: 0
-    Disease: 0
-    Toxicity: 0
-    Acidity: 0
 --- !u!1 &565881332
 GameObject:
   m_ObjectHideFlags: 0
@@ -3626,7 +3547,6 @@ GameObject:
   - component: {fileID: 1125696581}
   - component: {fileID: 1125696579}
   - component: {fileID: 1125696580}
-  - component: {fileID: 1125696584}
   m_Layer: 5
   m_Name: Contract (4)
   m_TagString: Untagged
@@ -3673,7 +3593,10 @@ MonoBehaviour:
     ContractID: 0
     isContractStarted: 0
     ContractDescription: 
-  contractPlant: {fileID: 1125696584}
+  contractPlant: {fileID: 0}
+  plants: []
+  plantprefab: {fileID: 8602959280570261124, guid: 1bcd737742dfb3841809eaa791adfd2b,
+    type: 3}
 --- !u!114 &1125696580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3776,35 +3699,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1125696577}
   m_CullTransparentMesh: 0
---- !u!114 &1125696584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1125696577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bed606cd22788445a25ba7ea75e9bfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plantStats:
-    isDroneAssigned: 0
-    isPlantPlanted: 0
-    isPlantInContract: 0
-    PlantID: 0
-    FieldID: 
-    ContractID: 0
-    GrowthDays: 0
-    Tultip: 0
-    SoilMoisture: 0
-    SoilDensity: 0
-    SoilOrganicMaterial: 0
-    Fertilizer: 0
-    Weed: 0
-    Disease: 0
-    Toxicity: 0
-    Acidity: 0
 --- !u!1 &1132099733
 GameObject:
   m_ObjectHideFlags: 0
@@ -5535,7 +5429,6 @@ GameObject:
   - component: {fileID: 1352827957}
   - component: {fileID: 1352827955}
   - component: {fileID: 1352827956}
-  - component: {fileID: 1352827960}
   m_Layer: 5
   m_Name: Contract (6)
   m_TagString: Untagged
@@ -5582,7 +5475,10 @@ MonoBehaviour:
     ContractID: 0
     isContractStarted: 0
     ContractDescription: 
-  contractPlant: {fileID: 1352827960}
+  contractPlant: {fileID: 0}
+  plants: []
+  plantprefab: {fileID: 8602959280570261124, guid: 1bcd737742dfb3841809eaa791adfd2b,
+    type: 3}
 --- !u!114 &1352827956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5685,35 +5581,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352827953}
   m_CullTransparentMesh: 0
---- !u!114 &1352827960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1352827953}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bed606cd22788445a25ba7ea75e9bfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plantStats:
-    isDroneAssigned: 0
-    isPlantPlanted: 0
-    isPlantInContract: 0
-    PlantID: 0
-    FieldID: 
-    ContractID: 0
-    GrowthDays: 0
-    Tultip: 0
-    SoilMoisture: 0
-    SoilDensity: 0
-    SoilOrganicMaterial: 0
-    Fertilizer: 0
-    Weed: 0
-    Disease: 0
-    Toxicity: 0
-    Acidity: 0
 --- !u!224 &1356223653 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8545431556362673787, guid: d6a11600f686c8e4288934d71c033027,
@@ -6973,35 +6840,6 @@ MonoBehaviour:
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1843607254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1843607251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bed606cd22788445a25ba7ea75e9bfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plantStats:
-    isDroneAssigned: 0
-    isPlantPlanted: 0
-    isPlantInContract: 0
-    PlantID: 0
-    FieldID: 
-    ContractID: 0
-    GrowthDays: 0
-    Tultip: 0
-    SoilMoisture: 0
-    SoilDensity: 0
-    SoilOrganicMaterial: 0
-    Fertilizer: 0
-    Weed: 0
-    Disease: 0
-    Toxicity: 0
-    Acidity: 0
 --- !u!114 &1843607256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7018,7 +6856,10 @@ MonoBehaviour:
     ContractID: 0
     isContractStarted: 0
     ContractDescription: 
-  contractPlant: {fileID: 1843607254}
+  contractPlant: {fileID: 0}
+  plants: []
+  plantprefab: {fileID: 8602959280570261124, guid: 1bcd737742dfb3841809eaa791adfd2b,
+    type: 3}
 --- !u!114 &1843607257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7814,3 +7655,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2139530518}
   m_CullTransparentMesh: 0
+--- !u!1001 &7541283154856523921
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8602959280570261124, guid: 1bcd737742dfb3841809eaa791adfd2b,
+        type: 3}
+      propertyPath: m_Name
+      value: PlantPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 400400270517384032, guid: 1bcd737742dfb3841809eaa791adfd2b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400400270517384032, guid: 1bcd737742dfb3841809eaa791adfd2b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400400270517384032, guid: 1bcd737742dfb3841809eaa791adfd2b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400400270517384032, guid: 1bcd737742dfb3841809eaa791adfd2b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400400270517384032, guid: 1bcd737742dfb3841809eaa791adfd2b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400400270517384032, guid: 1bcd737742dfb3841809eaa791adfd2b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400400270517384032, guid: 1bcd737742dfb3841809eaa791adfd2b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400400270517384032, guid: 1bcd737742dfb3841809eaa791adfd2b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 400400270517384032, guid: 1bcd737742dfb3841809eaa791adfd2b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400400270517384032, guid: 1bcd737742dfb3841809eaa791adfd2b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400400270517384032, guid: 1bcd737742dfb3841809eaa791adfd2b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1bcd737742dfb3841809eaa791adfd2b, type: 3}

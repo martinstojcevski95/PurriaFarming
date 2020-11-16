@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -66,10 +67,9 @@ public class UIController : MonoBehaviour
     {
         LogInAndRegisterScreen.enabled = false;
         // here the wait time needs to respond to the real wait time later when the data will be loaded from the db
-        DisplayAutomaticLogText(2f, "Loading, please wait");
-        StartCoroutine(OpenDashboardAfterLogIn(2f,FullDashboard,true));
+            DisplayAutomaticLogText(3f, "Loading, please wait");
+        StartCoroutine(OpenDashboardAfterLogIn(3f, FullDashboard, true));
     }
-
 
     /// <summary>
     /// Activates UI overtime
@@ -77,9 +77,11 @@ public class UIController : MonoBehaviour
     /// <returns></returns>
     IEnumerator OpenDashboardAfterLogIn(float waitTime, RectTransform Screen, bool ScreenVisibility)
     {
+
         yield return new WaitForSeconds(waitTime);
         FullDashboardUI.enabled = true;
         Screen.DOAnchorPos(new Vector2(0f, -159f), 0.5f);
+       ContractController.Instance.GetDataForAllPlantsLinkedWithContracts();
     }
 
     #endregion

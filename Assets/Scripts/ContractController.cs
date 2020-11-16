@@ -38,14 +38,19 @@ public class ContractController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Retreiving all contracts plants data only
+    /// </summary>
     public void GetDataForAllPlantsLinkedWithContracts()
     {
         for (int i = 0; i < Contracts.Count; i++)
         {
-            Contracts[i].contractPlant.LoadPlantData(Contracts[i].contractStats.ContractID, i);
+            Contracts[i].RetreivePlantsData();
+
         }
-    
+
     }
+
 
     //PUBLIC VARIABLES 
     public static ContractController Instance;

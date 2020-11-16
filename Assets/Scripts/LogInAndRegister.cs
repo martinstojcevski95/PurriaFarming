@@ -118,8 +118,6 @@ public class LogInAndRegister : MonoBehaviour
 
 
                   ContractController.Instance.GetDataForAllContracts();
-                  ContractController.Instance.GetDataForAllPlantsLinkedWithContracts();
-
               });
 
         SetLogInCreds();
