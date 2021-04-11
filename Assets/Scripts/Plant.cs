@@ -27,12 +27,12 @@ public class Plant : MonoBehaviour
     /// <param name="plantid"></param>
     public void SetInitialPlants(int contid, int plantid)
     {
-        var generatedFieldID = generateID();
+      //  var generatedFieldID =  generateID();
         plantStats = new PlantStats();
         plantStats.isDroneAssigned = false;
         plantStats.isPlantPlanted = true;
         plantStats.isPlantInContract = true;
-        plantStats.FieldID = generatedFieldID;
+        plantStats.FieldID = contid;// generatedFieldID;
         plantStats.ContractID = contid;
         plantStats.PlantID = plantid;
 
@@ -45,14 +45,15 @@ public class Plant : MonoBehaviour
         plantGrowthFactors.LeavesWidth = 10;
         plantGrowthFactors.SoilCover = 10;
         plantGrowthFactors.Weight = 10;
-        plantGrowthFactors.FieldID = generatedFieldID;
+        plantGrowthFactors.FieldID = contid;// generatedFieldID;
 
         string growthFactorsJson = JsonUtility.ToJson(plantGrowthFactors);
         string statsJson = JsonUtility.ToJson(plantStats);
 
         FirebaseReferenceManager.reference.Child("USERS").Child(LogInAndRegister.Instance.UserName).Child("farmdata").Child("contract" + contid).Child("stats").Child("plant" + plantid).SetRawJsonValueAsync(statsJson);
         FirebaseReferenceManager.reference.Child("USERS").Child(LogInAndRegister.Instance.UserName).Child("farmdata").Child("contract" + contid).Child("growthfactors").Child("plant" + plantid).SetRawJsonValueAsync(growthFactorsJson);
-
+     
+        // do the continue with task to chek if the request was good;
     }
 
 
@@ -60,7 +61,8 @@ public class Plant : MonoBehaviour
 
     public string generateID()
     {
-        return Guid.NewGuid().ToString("N");
+        
+        return System.Guid.NewGuid().ToString("N");
     }
 
 
@@ -94,7 +96,7 @@ public class Plant : MonoBehaviour
                {
                    DataSnapshot snapshot = task.Result;
 
-                   Debug.Log(snapshot.GetRawJsonValue());
+                  // Debug.Log(snapshot.GetRawJsonValue());
 
                    plantStats = JsonUtility.FromJson<PlantStats>(snapshot.GetRawJsonValue());
 
@@ -125,13 +127,12 @@ public class Plant : MonoBehaviour
                 DataSnapshot snapshot = task.Result;
 
                 Debug.Log(snapshot.GetRawJsonValue());
+                plantGrowthFactors = JsonUtility.FromJson<PlantGrowthFactors>(snapshot.GetRawJsonValue());
 
-                plantStats = JsonUtility.FromJson<PlantStats>(snapshot.GetRawJsonValue());
-
+             //   StartCoroutine(PlantsGrowthFactorsDataCoroutine(snapshot));
             }
         });
     }
-
 
 
     int initialPlants = 15;
@@ -144,7 +145,7 @@ public class Plant : MonoBehaviour
         public bool isPlantPlanted;
         public bool isPlantInContract;
         public int PlantID;
-        public string FieldID;
+        public int FieldID;
         public int ContractID;
         public int GrowthDays;
         public int Tultip;
@@ -168,6 +169,6 @@ public class Plant : MonoBehaviour
         public int HeatofPlant;
         public int ColorofPlant;
         public int SoilCover;
-        public string FieldID;
+        public int FieldID;
     }
 }

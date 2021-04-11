@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Experimental.AI;
 using UnityEngine.UI;
 
 
@@ -20,10 +21,16 @@ public class Contract : MonoBehaviour
 
     public GameObject plantprefab;
 
+    public int spawnedPlants;
+
+
+    public Button CreateContractButton;
+    public bool isContractDataLoadedFully;
+    public ContractGrid contGrid;
+ 
 
     private void Awake()
     {
-
         var parent = GetComponent<ContractPublicInfo>();// transform.GetChild(2).GetComponent<ContractPublicInfo>();
         contractPublicInfo = parent;
         if (contractPublicInfo != null)
@@ -32,7 +39,7 @@ public class Contract : MonoBehaviour
             // contract not started   contractPublicInfo.ContractUIButton.enabled = false;
         }
 
-        InstantiatePlants();
+        //     InstantiatePlants();
     }
 
     // Start is called before the first frame update
@@ -47,6 +54,55 @@ public class Contract : MonoBehaviour
 
     }
 
+    void InstantiatePlantsForContract()
+    {
+        ContractController.Instance.ContractInteractibleButtons(false);
+
+        while (spawnedPlants < InitialPlantsCount)
+        {
+            spawnedPlants++;
+            GameObject plant = Instantiate(plantprefab, gameObject.transform);
+            plant.transform.parent = gameObject.transform;
+            plants.Add(plant.GetComponent<Plant>());
+            spawnedPlants = plants.Count;
+        }
+    }
+
+    public void InstantiatePlantsOnContractInspection()
+    {
+        if (this.contractStats != null)
+        {
+            InstantiatePlantsForContract();
+            if (!isContractDataLoadedFully)
+            {
+                // ContractController.Instance.CurrenctContractActivePlants(true, this);
+                RetreivePlantsData();
+            }
+            else
+            {
+
+                Debug.Log("full contract data is already loaded");
+            }
+            isContractDataLoadedFully = true;
+            Debug.Log(this.contractStats.ContractID);
+            ContractController.Instance.CurrenctContractActivePlants(true, this);
+            FieldsManager.Instance.CurrentActiveFieldButton(contractStats.ContractID);
+        }
+
+
+        //  ContractController.Instance.CurrenctContractActivePlants(true, contractStats.ContractID);
+    }
+
+
+    public void SetContractGrid()
+    {
+        //contGrid = grid;
+        contGrid = ContractController.Instance.Grid;
+        if(contGrid != null)
+        contGrid.SetGridStats(this);
+      //  contractPublicInfo.GridContractID = contGrid.StaticGridID;
+    }
+
     /// <summary>
     /// spawning all fifteens plants for each contract
     /// </summary>
@@ -57,6 +113,7 @@ public class Contract : MonoBehaviour
             GameObject plant = Instantiate(plantprefab, gameObject.transform);
             plant.transform.parent = gameObject.transform;
             plants.Add(plant.GetComponent<Plant>());
+            spawnedPlants = plants.Count;
         }
 
     }
@@ -69,39 +126,65 @@ public class Contract : MonoBehaviour
         }
     }
 
+
     /// <summary>
     /// Creating initial contract
     /// </summary>
     public void CreateContract()
     {
-
-        contractStats = new ContractStats();
-        if (contractStats.isContractStarted == false)
+        if(ContractController.Instance.isGridsContractChosen)
         {
-            contractStats.ContractDescription = "test";
-            contractStats.ContractID = contractPublicInfo.StaticConttractID;
-            contractStats.isContractStarted = true;
-            // set public info here
-            //   gameObject.GetComponent<ContractPublicInfo>().SetPlayerPrefsContractID(contract.contractStats.ContractID, true);
-            string serializedJson = JsonUtility.ToJson(contractStats);
-            FirebaseReferenceManager.reference.Child("USERS").Child(LogInAndRegister.Instance.UserName).Child("farmdata").Child("contract" + contractStats.ContractID).SetRawJsonValueAsync(serializedJson);
-            CreatePlantsForContract();
-        }
+            InstantiatePlantsForContract();
 
-        LoadContractDataA();
+
+
+            contractStats = new ContractStats();
+            if (contractStats.isContractStarted == false)
+            {
+                contractStats.ContractDescription = "test";
+                // contractStats.ContractID = ContractController.Instance.ChosenContractIDFroAuction;
+                //  contractStats.ContractID = contGrid.StaticGridID;
+                contractStats.ContractID = contractPublicInfo.StaticConttractID;
+                contractStats.isContractStarted = true;
+                // set public info here
+                //   gameObject.GetComponent<ContractPublicInfo>().SetPlayerPrefsContractID(contract.contractStats.ContractID, true);
+                string serializedJson = JsonUtility.ToJson(contractStats);
+                FirebaseReferenceManager.reference.Child("USERS").Child(LogInAndRegister.Instance.UserName).Child("farmdata").Child("contract" + contractStats.ContractID).SetRawJsonValueAsync(serializedJson).ContinueWith(task =>
+                {
+                    if (task.IsFaulted)
+                    {
+                        Debug.Log("POST REQUEST FAILED  FOR CONTRACT " + contractStats.ContractID);
+                        // Handle the error...
+                    }
+                    else if (task.IsCompleted)
+                    {
+
+                        Debug.Log("POST REQUEST SUCCESS  FOR CONTRACT" + contractStats.ContractID);
+                        LoadContractDataA();
+                        CreatePlantsForContract();
+                        ContractController.Instance.ContractInteractibleButtons(true);
+
+                    }
+                });
+                SetContractGrid();
+            }
+        }
+ 
     }
 
+
+
     /// <summary>
-    /// Planting plants for the crreated contract
+    /// Planting plants for the created contract
     /// </summary>
     void CreatePlantsForContract()
     {
         for (int i = 0; i < plants.Count; i++)
         {
-
             plants[i].SetInitialPlants(contractStats.ContractID, i);
         }
     }
+
 
 
     /// <summary>
@@ -119,6 +202,7 @@ public class Contract : MonoBehaviour
         }
 
     }
+
     /// <summary>
     /// Deleting the contract with pop up confirmation yes/no
     /// </summary>
@@ -131,6 +215,7 @@ public class Contract : MonoBehaviour
             contractStats = null;
             UIController.Instance.DeleteDialogYesButton.onClick.RemoveAllListeners();
         }
+
         DeletePlants();
     }
 
@@ -165,16 +250,26 @@ public class Contract : MonoBehaviour
       {
           if (task.IsFaulted)
           {
-              // Handle the error...
+              Debug.Log("GET REQUEST FAILED FOR CONTRACT " + contractPublicInfo.StaticConttractID);
+
           }
           else if (task.IsCompleted)
           {
               DataSnapshot snapshot = task.Result;
-
-              Debug.Log(snapshot.GetRawJsonValue());
-
               contractStats = JsonUtility.FromJson<ContractStats>(snapshot.GetRawJsonValue());
+              //  if (snapshot.GetRawJsonValue().Length>=1)
+              //  {
+              Debug.Log("GET REQUEST SUCCESS FOR CONTRACT " + contractPublicInfo.StaticConttractID + " DATA :  " + snapshot.GetRawJsonValue());
               isDataLoaded = true;
+              UIController.Instance.isLogged = true;
+              //  }
+              //  else
+              //   {
+              //   Debug.Log("no data brother");
+              //   isDataLoaded = false;
+              //  }
+              //  contractStats = JsonUtility.FromJson<ContractStats>(snapshot.GetRawJsonValue());
+
           }
       });
 
@@ -186,7 +281,8 @@ public class Contract : MonoBehaviour
     }
 
     bool isDataLoaded;
-    int InitialPlantsCount = 15;
+    int InitialPlantsCount = 30;
+    public int StaticID;
 
     //CLASSES
     [Serializable]
@@ -196,5 +292,7 @@ public class Contract : MonoBehaviour
         public bool isContractStarted;
         public string ContractDescription;
     }
+
+
 
 }

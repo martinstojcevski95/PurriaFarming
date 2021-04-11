@@ -100,6 +100,7 @@ public class LogInAndRegister : MonoBehaviour
     /// </summary>
     public void LogIn()
     {
+        UIController.Instance.LoginIn();
         auth.SignInWithEmailAndPasswordAsync(LogInEmail.text, LogInPassword.text).ContinueWith(task =>
               {
                   if (task.IsCanceled)
@@ -118,10 +119,11 @@ public class LogInAndRegister : MonoBehaviour
 
 
                   ContractController.Instance.GetDataForAllContracts();
+                  ContractController.Instance.GridsData();
               });
 
         SetLogInCreds();
-        UIController.Instance.OpenFullDasobhard();
+      //  UIController.Instance.OpenFullDasobhard();
     }
 
 

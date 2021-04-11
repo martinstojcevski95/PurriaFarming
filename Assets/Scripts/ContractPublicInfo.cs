@@ -27,6 +27,7 @@ public class ContractPublicInfo : MonoBehaviour
             {
                 if(contract.contractStats.isContractStarted)
                 {
+                    ContractIDFrmGrid.text = "Contract " + GridContractID;
                     CreateContractUIButton.interactable = false;
                     ContractUIButtonInfo.text = "Contract Started";
                     DeleteContractButton.interactable = true;
@@ -34,6 +35,7 @@ public class ContractPublicInfo : MonoBehaviour
             }
             else
             {
+                ContractIDFrmGrid.text = "";
                 CreateContractUIButton.interactable = true;
                 ContractUIButtonInfo.text = "Not Started";
                 DeleteContractButton.interactable = false;
@@ -54,6 +56,8 @@ public class ContractPublicInfo : MonoBehaviour
     public Button CreateContractUIButton;
     public Button DeleteContractButton;
     public int StaticConttractID;
+    public int GridContractID;
+    public Text ContractIDFrmGrid;
     public Text ActivePlantsInContract;
     public Text AssignedDroneToContract;
     public Text ContractUIButtonInfo;
